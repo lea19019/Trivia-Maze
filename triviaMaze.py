@@ -30,7 +30,14 @@ class gameWindow:
     
     def on_key_release(self, key, modifications):
         # Define this, the line below is placeholder  
-        x = 0
+        if key == arcade.key.UP:
+            self.up_pressed = False
+        elif key == arcade.key.DOWN:
+            self.down_pressed = False
+        elif key == arcade.key.LEFT:
+            self.left_pressed = False
+        elif key == arcade.key.RIGHT:
+            self.right_pressed = False
         
     def update(self):
         # Define this, the line below is placeholder 
