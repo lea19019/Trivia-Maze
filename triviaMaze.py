@@ -10,13 +10,26 @@ class gameWindow(arcade.Window):
         # Call the parent class and set up the window
         super().__init__(800, 600, "Trivia Maze")
 
+        self.cs_list = arcade.SpriteList()
+        self.usHist_list = arcade.SpriteList()
         self.all_sprites = arcade.SpriteList()
 
     def setup(self):
         # The background can be change
         arcade.set_background_color(arcade.color.GRAY_BLUE)
 
-        self.player = arcade.Sprite('./images/player.png', scale=.2)
+        self.cs1 = arcade.Sprite('assets/collageCS1.jpg', scale=.3)
+        self.cs_list.append(self.cs1)
+        self.cs2 = arcade.Sprite('assets/collageCS2.jpg', scale=.3)
+        self.cs_list.append(self.cs2)
+        self.us1 = arcade.Sprite('assets/collageUS1.jpg.jpg', scale=.3)
+        self.usHist_list.append(self.us1)
+        self.us2 = arcade.Sprite('assets/collageUS2.jpg.jpg', scale=.3)
+        self.usHist_list.append(self.us2)
+
+        self.cs_list.append(self.cs1)
+
+        self.player = arcade.Sprite('assets/player.png', scale=.2)
         self.player.center_y = self.height/2
         self.player.left = 15
         self.all_sprites.append(self.player)
