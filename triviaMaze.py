@@ -1,74 +1,122 @@
 import arcade
-from pyglet.window.key import LEFT
-
 
 # Constants defined here
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+SCREEN_NAME = "Trivia Maze"
 
+MOVEMENT_SPEED = 4 
 
 class gameWindow(arcade.Window):
     def __init__(self):
         # Call the parent class and set up the window
-        super().__init__(800, 600, "Trivia Maze")
+        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_NAME)
 
-        self.cs_list = arcade.SpriteList()
-        self.usHist_list = arcade.SpriteList()
-        self.all_sprites = arcade.SpriteList()
+        # Define lists for each topic and the player 
+        self.wall_list = None
+        self.player_sprite = None
+        self.quiz_list = None
+
+        # Player sprite for direct access (movement needs)
+        self.player = None
+
+        # Movement engine
+        self.physics_engine = None
+
+        # Load the textures for use
+        self.cs_textures = ['assets/collageCS1.jpg', 'assets/collageCS2.jpg']
+        self.us_textures = ['assets/collageUS1.jpg', 'assets/collageUS2.jpg']
+        self.chem_textures = []
+        self.math_textures = []
+
 
     def setup(self):
-        # The background can be change
-        arcade.set_background_color(arcade.color.GRAY_BLUE)
+        # Initialize sprite lists
+        self.wall_list = arcade.SpriteList(use_spatial_hash=True)
+        self.player_sprite = arcade.SpriteList()
 
-        self.cs1 = arcade.Sprite('assets/collageCS1.jpg', scale=.3)
-        self.cs_list.append(self.cs1)
-        self.cs2 = arcade.Sprite('assets/collageCS2.jpg', scale=.3)
-        self.cs_list.append(self.cs2)
-        self.us1 = arcade.Sprite('assets/collageUS1.jpg.jpg', scale=.3)
-        self.usHist_list.append(self.us1)
-        self.us2 = arcade.Sprite('assets/collageUS2.jpg.jpg', scale=.3)
-        self.usHist_list.append(self.us2)
+        topic = "CS"
+        # Assign wall textures and background color by topic
+        if topic == "CS":
+            for texture in self.cs_textures:
+                self.wall_list.append(arcade.Sprite(texture, scale=.3))
+                arcade.set_background_color(arcade.color.GRAY_BLUE)
+                # Set quiz_list to first primary key in CS table
+        elif topic == "US":
+            for texture in self.us_textures:
+                self.wall_list.append(arcade.Sprite(texture, scale=.3))
+                arcade.set_background_color(arcade.color.GRAY_BLUE)
+                # Set quiz_list to first primary key in US table
+        elif topic == "Chem":
+            for texture in self.chem_textures:
+                self.wall_list.append(arcade.Sprite(texture, scale=.3))
+                arcade.set_background_color(arcade.color.GRAY_BLUE)
+                # Set quiz_list to first primary key in Chem table
+        else:
+            for texture in self.math_textures:
+                self.wall_list.append(arcade.Sprite(texture, scale=.3))
+                arcade.set_background_color(arcade.color.GRAY_BLUE)
+                # Set quiz_list to first primary key in Math table
 
-        self.cs_list.append(self.cs1)
-
+        # Assign player sprite texture and placement
         self.player = arcade.Sprite('assets/player.png', scale=.2)
-        self.player.center_y = self.height/2
-        self.player.left = 15
-        self.all_sprites.append(self.player)
+        self.player.center_y = SCREEN_HEIGHT//2
+        self.player.center_x = SCREEN_WIDTH//2
+        self.player_sprite.append(self.player)
+
+        # Pick the physics engine
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player, self.wall_list)
 
     def on_draw(self):
-        # this will be where all the drawing take place in the game
+        # this will be where all the drawing takes place in the game
 
         arcade.start_render()
-        self.all_sprites.draw()
+        self.wall_list.draw()
+        self.player_sprite.draw()
+        # Draw quiz_list
 
-    # def on_key_press(self, key, modifications):
-    #     # Define this, the line below is placeholder
-    #     x = 0
-    #     if key == arcade.key.UP:
+    def on_key_press(self, key, modifications):
+        if key == arcade.key.UP:
     #         self.up_pressed = True
-    #     elif key == arcade.key.DOWN:
+            self.player.change_y = MOVEMENT_SPEED
+        elif key == arcade.key.DOWN:
     #         self.down_pressed = True
-    #     elif key == arcade.key.LEFT:
+            self.player.change_y = -MOVEMENT_SPEED
+        elif key == arcade.key.LEFT:
     #         self.left_pressed = True
-    #     elif key == arcade.key.RIGHT:
+            self.player.change_x = -MOVEMENT_SPEED
+        elif key == arcade.key.RIGHT:
     #         self.right_pressed = True
+            self.player.change_x = MOVEMENT_SPEED
 
-    # def on_key_release(self, key, modifications):
-    #     # Define this, the line below is placeholder
-    #     if key == arcade.key.UP:
+    def on_key_release(self, key, modifications):
+        if key == arcade.key.UP:
     #         self.up_pressed = False
-    #     elif key == arcade.key.DOWN:
+            self.player.change_y = 0
+        elif key == arcade.key.DOWN:
     #         self.down_pressed = False
-    #     elif key == arcade.key.LEFT:
+                self.player.change_y = 0
+        elif key == arcade.key.LEFT:
     #         self.left_pressed = False
-    #     elif key == arcade.key.RIGHT:
+                self.player.change_x = 0
+        elif key == arcade.key.RIGHT:
     #         self.right_pressed = False
+                self.player.change_x = 0
 
-    # def on_update(self, delta_time):
-    #     # This is the callback. it is set to 60fps by default
-    #     x = 0
+    def on_update(self, delta_time):
+        # This is the callback. it is set to 60fps by default
+        self.physics_engine.update()
+
+        """Check for collision with the answers"""
+        # If collision is detected
+            # If related bool == true
+                # Draw text Success and sleep for 2 seconds?
+            # Else 
+                # Draw text Failure and sleep 2 seconds?
+            # Update question/answer list with new textures/sprites from db
 
 
-# Additional methods for handling data access, title and ending screens, etc. will go here
+# Additional methods for handling data access, title and ending screens, etc. can go here
 
 def main():
     # Main method
