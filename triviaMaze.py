@@ -12,22 +12,36 @@ class gameWindow(arcade.Window):
 
         self.cs_list = arcade.SpriteList()
         self.usHist_list = arcade.SpriteList()
+        self.math_list = arcade.SpriteList()
+        self.chem_list = arcade.SpriteList()
         self.all_sprites = arcade.SpriteList()
 
     def setup(self):
         # The background can be change
         arcade.set_background_color(arcade.color.GRAY_BLUE)
 
+        # CS
         self.cs1 = arcade.Sprite('assets/collageCS1.jpg', scale=.3)
         self.cs_list.append(self.cs1)
         self.cs2 = arcade.Sprite('assets/collageCS2.jpg', scale=.3)
         self.cs_list.append(self.cs2)
+        # US History
         self.us1 = arcade.Sprite('assets/collageUS1.jpg.jpg', scale=.3)
         self.usHist_list.append(self.us1)
         self.us2 = arcade.Sprite('assets/collageUS2.jpg.jpg', scale=.3)
         self.usHist_list.append(self.us2)
+        # Math
+        self.m1 = arcade.Sprite('assets/collageM1.jpg', scale=.3)
+        self.math_list.append(self.m1)
+        self.m2 = arcade.Sprite('assets/collageM2.jpg', scale=.3)
+        self.math_list.append(self.m2)
+        # Chem
+        self.chem1 = arcade.Sprite('assets/collageCHEM1.jpg', scale=.3)
+        self.chem_list.append(self.chem1)
+        self.chem2 = arcade.Sprite('assets/collageCHEM2.jpg', scale=.3)
+        self.chem_list.append(self.chem2)
 
-        self.cs_list.append(self.cs1)
+        # self.cs_list.append(self.cs1)
 
         self.player = arcade.Sprite('assets/player.png', scale=.2)
         self.player.center_y = self.height/2
@@ -42,7 +56,6 @@ class gameWindow(arcade.Window):
 
     # def on_key_press(self, key, modifications):
     #     # Define this, the line below is placeholder
-    #     x = 0
     #     if key == arcade.key.UP:
     #         self.up_pressed = True
     #     elif key == arcade.key.DOWN:
