@@ -5,7 +5,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SCREEN_NAME = "Trivia Maze"
 
-MOVEMENT_SPEED = 4 
+MOVEMENT_SPEED = 6 
 
 class gameWindow(arcade.Window):
     def __init__(self):
@@ -25,7 +25,7 @@ class gameWindow(arcade.Window):
 
         # Load the textures for use
         self.cs_textures = ['assets/collageCS1.jpg', 'assets/collageCS2.jpg']
-        self.us_textures = ['assets/collageUS1.jpg', 'assets/collageUS2.jpg']
+        self.us_textures = ['assets/collageUS1.jpg', 'assets/collageUS2.jpg', 'assets/collageUS3.jpg', 'assets/collageUS4.jpg']
         self.chem_textures = []
         self.math_textures = []
 
@@ -35,16 +35,32 @@ class gameWindow(arcade.Window):
         self.wall_list = arcade.SpriteList(use_spatial_hash=True)
         self.player_sprite = arcade.SpriteList()
 
-        topic = "CS"
+        topic = "US"
         # Assign wall textures and background color by topic
         if topic == "CS":
             for texture in self.cs_textures:
                 self.wall_list.append(arcade.Sprite(texture, scale=.3))
-                arcade.set_background_color(arcade.color.GRAY_BLUE)
+                arcade.set_background_color(arcade.color.SEPIA)
                 # Set quiz_list to first primary key in CS table
         elif topic == "US":
+            counter = 0
             for texture in self.us_textures:
-                self.wall_list.append(arcade.Sprite(texture, scale=.3))
+                temp = arcade.Sprite(texture, scale=.3, )
+                if counter <= 1:
+                    temp.center_x = 100
+                    if counter == 0:
+                        temp.center_y = SCREEN_HEIGHT - 100
+                    else:
+                        temp.center_y = 100
+                    counter += 1
+                else:
+                    temp.center_x = SCREEN_WIDTH - 100
+                    if counter == 2:
+                        temp.center_y = 100
+                    else:
+                        temp.center_y = SCREEN_HEIGHT - 100
+                    counter += 1
+                self.wall_list.append(temp)
                 arcade.set_background_color(arcade.color.GRAY_BLUE)
                 # Set quiz_list to first primary key in US table
         elif topic == "Chem":
