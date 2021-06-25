@@ -1,18 +1,36 @@
 import arcade
+import connect_to_database
 
 # Constants defined here
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 SCREEN_NAME = "Trivia Maze"
 
-MOVEMENT_SPEED = 6 
+MOVEMENT_SPEED = 6
+
+
+def fetchingData(topic):
+    if topic == "CS":
+        print('CS')
+        # Call the database access method, for this topic
+        # Store result, which has a structure of a list of lists,
+
+    elif topic == "US":
+        print('US')
+    elif topic == "Chem":
+        print('Chem')
+    else:
+        print('MATH')
+
+    return
+
 
 class gameWindow(arcade.Window):
     def __init__(self):
         # Call the parent class and set up the window
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_NAME)
 
-        # Define lists for each topic and the player 
+        # Define lists for each topic and the player
         self.wall_list = None
         self.player_sprite = None
         self.quiz_list = None
@@ -25,10 +43,10 @@ class gameWindow(arcade.Window):
 
         # Load the textures for use
         self.cs_textures = ['assets/collageCS1.jpg', 'assets/collageCS2.jpg']
-        self.us_textures = ['assets/collageUS1.jpg', 'assets/collageUS2.jpg', 'assets/collageUS3.jpg', 'assets/collageUS4.jpg']
+        self.us_textures = ['assets/collageUS1.jpg', 'assets/collageUS2.jpg',
+                            'assets/collageUS3.jpg', 'assets/collageUS4.jpg']
         self.chem_textures = []
         self.math_textures = []
-
 
     def setup(self):
         # Initialize sprite lists
@@ -82,7 +100,8 @@ class gameWindow(arcade.Window):
         self.player_sprite.append(self.player)
 
         # Pick the physics engine
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player, self.wall_list)
+        self.physics_engine = arcade.PhysicsEngineSimple(
+            self.player, self.wall_list)
 
     def on_draw(self):
         # this will be where all the drawing takes place in the game
@@ -94,31 +113,31 @@ class gameWindow(arcade.Window):
 
     def on_key_press(self, key, modifications):
         if key == arcade.key.UP:
-    #         self.up_pressed = True
+            #         self.up_pressed = True
             self.player.change_y = MOVEMENT_SPEED
         elif key == arcade.key.DOWN:
-    #         self.down_pressed = True
+            #         self.down_pressed = True
             self.player.change_y = -MOVEMENT_SPEED
         elif key == arcade.key.LEFT:
-    #         self.left_pressed = True
+            #         self.left_pressed = True
             self.player.change_x = -MOVEMENT_SPEED
         elif key == arcade.key.RIGHT:
-    #         self.right_pressed = True
+            #         self.right_pressed = True
             self.player.change_x = MOVEMENT_SPEED
 
     def on_key_release(self, key, modifications):
         if key == arcade.key.UP:
-    #         self.up_pressed = False
+            #         self.up_pressed = False
             self.player.change_y = 0
         elif key == arcade.key.DOWN:
-    #         self.down_pressed = False
-                self.player.change_y = 0
+            #         self.down_pressed = False
+            self.player.change_y = 0
         elif key == arcade.key.LEFT:
-    #         self.left_pressed = False
-                self.player.change_x = 0
+            #         self.left_pressed = False
+            self.player.change_x = 0
         elif key == arcade.key.RIGHT:
-    #         self.right_pressed = False
-                self.player.change_x = 0
+            #         self.right_pressed = False
+            self.player.change_x = 0
 
     def on_update(self, delta_time):
         # This is the callback. it is set to 60fps by default
@@ -126,11 +145,11 @@ class gameWindow(arcade.Window):
 
         """Check for collision with the answers"""
         # If collision is detected
-            # If related bool == true
-                # Draw text Success and sleep for 2 seconds?
-            # Else 
-                # Draw text Failure and sleep 2 seconds?
-            # Update question/answer list with new textures/sprites from db
+        # If related bool == true
+        # Draw text Success and sleep for 2 seconds?
+        # Else
+        # Draw text Failure and sleep 2 seconds?
+        # Update question/answer list with new textures/sprites from db
 
 
 # Additional methods for handling data access, title and ending screens, etc. can go here
