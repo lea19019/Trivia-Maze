@@ -40,12 +40,13 @@ class gameWindow(arcade.Window):
         if topic == "CS":
             for texture in self.cs_textures:
                 self.wall_list.append(arcade.Sprite(texture, scale=.3))
-                arcade.set_background_color(arcade.color.SEPIA)
-                # Set quiz_list to first primary key in CS table
+            arcade.set_background_color(arcade.color.GRAY_BLUE)
+            # Set quiz_list to first primary key in CS table
         elif topic == "US":
             counter = 0
             for texture in self.us_textures:
                 temp = arcade.Sprite(texture, scale=.3, )
+                # Assign each a different location
                 if counter <= 1:
                     temp.center_x = 100
                     if counter == 0:
@@ -61,18 +62,18 @@ class gameWindow(arcade.Window):
                         temp.center_y = SCREEN_HEIGHT - 100
                     counter += 1
                 self.wall_list.append(temp)
-                arcade.set_background_color(arcade.color.GRAY_BLUE)
-                # Set quiz_list to first primary key in US table
+            arcade.set_background_color(arcade.color.SEPIA)
+            # Set quiz_list to first primary key in US table
         elif topic == "Chem":
             for texture in self.chem_textures:
                 self.wall_list.append(arcade.Sprite(texture, scale=.3))
-                arcade.set_background_color(arcade.color.GRAY_BLUE)
-                # Set quiz_list to first primary key in Chem table
+            arcade.set_background_color(arcade.color.GRAY_BLUE)
+            # Set quiz_list to first primary key in Chem table
         else:
             for texture in self.math_textures:
                 self.wall_list.append(arcade.Sprite(texture, scale=.3))
-                arcade.set_background_color(arcade.color.GRAY_BLUE)
-                # Set quiz_list to first primary key in Math table
+            arcade.set_background_color(arcade.color.GRAY_BLUE)
+            # Set quiz_list to first primary key in Math table
 
         # Assign player sprite texture and placement
         self.player = arcade.Sprite('assets/player.png', scale=.2)
