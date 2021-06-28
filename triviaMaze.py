@@ -10,19 +10,17 @@ MOVEMENT_SPEED = 6
 
 
 def fetchingData(topic):
-    if topic == "CS":
-        print('CS')
-        # Call the database access method, for this topic
-        # Store result, which has a structure of a list of lists,
 
-    elif topic == "US":
-        print('US')
-    elif topic == "Chem":
-        print('Chem')
-    else:
-        print('MATH')
+    print('CS')
+    # Call the database access method, for this topic
+    # Store result, which has a structure of a list of lists,
+    questionsDict = {}
+    result = connect_to_database.connect_to_database(topic)
+    for i in range(result.lenght):
+        questionsDict.update(
+            {result[i][(i % 4)*4]: [result[i][1], result[i][2]]})
 
-    return
+    return questionsDict
 
 
 class gameWindow(arcade.Window):
