@@ -1,28 +1,27 @@
 # Overview
 
-{Important!  Do not say in this section that this is college assignment.}
-
-{Provide a description of your team project.  Describe how to use the software.}
+This is a simple graphics-based maze game that presents the player with a simple educational trivia question and four 'answers' that can be selected by exiting the current 'room' in a cardinal direction. The goal of this program is to provide children with a simple and engaging way to learn.
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
-
-{Describe the programming language that you used and any libraries.}
+To develop this program, we used Pygame and MySQL Database. We also used the mysql connector library to move data between the two.
 
 # Collaborators
 
-{Provide a list of everyone on your team}
+Our team consisted of
+
+* Matthew Unsworth
+* Sandro Dinklang
+* Vincente Castillo
+* Torin Bolander
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
-* [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
+* [MySQL Python Connector documentation](https://dev.mysql.com/doc/connector-python/en/)
+* [pygame documentation](https://www.pygame.org/news)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
-* Item 2
-* Item 3
+* We wanted to add Computer Science questions, but that would've required that we add image support for answers.
+* Music!
+* ...and better animations.
