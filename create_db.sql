@@ -870,7 +870,7 @@ VALUES
   (SELECT question_id
     FROM questions
     WHERE question_id = @question_insert_id),
-  'Demonic Invation of 2166',
+  'Demonic Invasion of 2166',
   FALSE
 );
 
