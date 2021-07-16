@@ -11,15 +11,16 @@ SCREEN_NAME = "Trivia Maze"
 
 MOVEMENT_SPEED = 6
 
-LEFT_X = 0
-LEFT_Y = 0
-TOP_X = 0
-TOP_Y = 0
-RIGHT_X = 0
-RIGHT_Y = 0
-BOTTOM_X = 0
-BOTTOM_Y = 0
+LEFT_X = 50
+LEFT_Y = 300
+TOP_X = 320
+TOP_Y = 520
+RIGHT_X = 620
+RIGHT_Y = 300
+BOTTOM_X = 320
+BOTTOM_Y = 100
 
+# Question sprite class
 class qSprite(arcade.Sprite):
     def __init__(self, bool):
         super().__init__()
@@ -27,8 +28,9 @@ class qSprite(arcade.Sprite):
             self.correct = True
         else:
             self.correct = False
-        self.set_hit_box([(-50,50), (50,50), (50,-50), (-50,50)])
+        self.set_hit_box([(-25,25), (25,25), (25,-25), (-25,-25)])
 
+# Shuffle a passed array's first 4 indicies
 def shuffle(array):
     temp = array[0]
     array[0] = array[1]
@@ -36,49 +38,82 @@ def shuffle(array):
     array[3] = array[2]
     array[2] = temp
 
+def encode(str):
+    count = 25
+    final = ""
+    # slice string, concantenate with \n inserted, reset count
+    if count < len(str):
+        while count < len(str):
+            arr = []
+            arr.append(str[:count])
+            arr.append("\n")
+            arr.append(str[count:])
+            final = ''.join(arr)
+            count += 25
+    else:
+        final = str
+    
+    return final
+
+# Draw the answers on screen based on an array
 def draw_answers(array, a, b, c, d, sprite_list):
     count = 0
     while count < len(array):
         if array[count] == 0:
             if count == 0:
                 arcade.draw_text(a, LEFT_X, LEFT_Y, color=WHITE)
+                sprite_list[array[count]].position = (LEFT_X, LEFT_Y)
             elif count == 1:
                 arcade.draw_text(a, TOP_X, TOP_Y, color=WHITE)
+                sprite_list[array[count]].position = (TOP_X, TOP_Y)
             elif count == 2:
                 arcade.draw_text(a, RIGHT_X, RIGHT_Y, color=WHITE)
+                sprite_list[array[count]].position = (RIGHT_X, RIGHT_Y)
             else:
                 arcade.draw_text(a, BOTTOM_X, BOTTOM_Y, color=WHITE)
+                sprite_list[array[count]].position = (BOTTOM_X, BOTTOM_Y)
         elif array[count] == 1:
             if count == 0:
                 arcade.draw_text(b, LEFT_X, LEFT_Y, color=WHITE)
+                sprite_list[array[count]].position = (LEFT_X, LEFT_Y)
             elif count == 1:
                 arcade.draw_text(b, TOP_X, TOP_Y, color=WHITE)
+                sprite_list[array[count]].position = (TOP_X, TOP_Y)
             elif count == 2:
                 arcade.draw_text(b, RIGHT_X, RIGHT_Y, color=WHITE)
+                sprite_list[array[count]].position = (RIGHT_X, RIGHT_Y)
             else:
                 arcade.draw_text(b, BOTTOM_X, BOTTOM_Y, color=WHITE)
+                sprite_list[array[count]].position = (BOTTOM_X, BOTTOM_Y)
         elif array[count] == 2:
             if count == 0:
                 arcade.draw_text(c, LEFT_X, LEFT_Y, color=WHITE)
+                sprite_list[array[count]].position = (LEFT_X, LEFT_Y)
             elif count == 1:
                 arcade.draw_text(c, TOP_X, TOP_Y, color=WHITE)
+                sprite_list[array[count]].position = (TOP_X, TOP_Y)
             elif count == 2:
                 arcade.draw_text(c, RIGHT_X, RIGHT_Y, color=WHITE)
+                sprite_list[array[count]].position = (RIGHT_X, RIGHT_Y)
             else:
                 arcade.draw_text(c, BOTTOM_X, BOTTOM_Y, color=WHITE)
+                sprite_list[array[count]].position = (BOTTOM_X, BOTTOM_Y)
         else:
             if count == 0:
                 arcade.draw_text(d, LEFT_X, LEFT_Y, color=WHITE)
+                sprite_list[array[count]].position = (LEFT_X, LEFT_Y)
             elif count == 1:
                 arcade.draw_text(d, TOP_X, TOP_Y, color=WHITE)
+                sprite_list[array[count]].position = (TOP_X, TOP_Y)
             elif count == 2:
                 arcade.draw_text(d, RIGHT_X, RIGHT_Y, color=WHITE)
+                sprite_list[array[count]].position = (RIGHT_X, RIGHT_Y)
             else:
                 arcade.draw_text(d, BOTTOM_X, BOTTOM_Y, color=WHITE)
+                sprite_list[array[count]].position = (BOTTOM_X, BOTTOM_Y)
         count += 1
 
 def fetchingData(topic):
-    print('CS')
     # Call the database access method, for this topic
     # Store result, which has a structure of a list of tuples,
     questionsDict = {}
@@ -89,7 +124,6 @@ def fetchingData(topic):
         else:
             questionsDict[result[i][0]].append((result[i][1], result[i][2]))
     return questionsDict
-
 
 class gameWindow(arcade.Window):
     def __init__(self):
@@ -123,7 +157,7 @@ class gameWindow(arcade.Window):
         self.question_number = 0
         self.questions = []
         self.current_question = []
-
+        
     def setup(self):
         # Initialize sprite lists
         self.wall_list = arcade.SpriteList(use_spatial_hash=True)
@@ -135,6 +169,7 @@ class gameWindow(arcade.Window):
         self.current_question = list(self.questions.keys())
         
         # Assign wall textures and background color by topic
+        # TODO
         if topic == "COMPSCI":
             for texture in self.cs_textures:
                 self.wall_list.append(arcade.Sprite(texture, scale=.3))
@@ -162,11 +197,13 @@ class gameWindow(arcade.Window):
                 self.wall_list.append(temp)
             arcade.set_background_color(arcade.color.SEPIA)
             # Set quiz_list to first primary key in US table
+        # TODO
         elif topic == "CHEMISTRY":
             for texture in self.chem_textures:
                 self.wall_list.append(arcade.Sprite(texture, scale=.3))
             arcade.set_background_color(arcade.color.GRAY_BLUE)
             # Set quiz_list to first primary key in Chem table
+        # TODO
         else:
             for texture in self.math_textures:
                 self.wall_list.append(arcade.Sprite(texture, scale=.3))
@@ -188,7 +225,8 @@ class gameWindow(arcade.Window):
         arcade.start_render()
         self.wall_list.draw()
         self.player_sprite.draw()
-        arcade.draw_text(self.current_question[self.question_number], SCREEN_WIDTH//2 - 100,SCREEN_HEIGHT//2 + 50, color=WHITE)
+        arcade.draw_text(encode(self.current_question[self.question_number]), SCREEN_WIDTH//2 - 100,
+                         SCREEN_HEIGHT//2 + 50, color=WHITE, width=250)
         draw_answers(self.array, self.a1, self.a2, self.a3, self.a4, self.quiz_list)
 
     def on_key_press(self, key, modifications):
@@ -231,27 +269,19 @@ class gameWindow(arcade.Window):
                     self.quiz_list.pop()
                     count += 1
             qlist = self.questions[self.current_question[self.question_number]]
-            self.a1 = qlist[0][0]
+            self.a1 = encode(qlist[0][0])
             self.quiz_list.append(qSprite(qlist[0][1])) 
-            self.a2 = qlist[1][0] 
+            self.a2 = encode(qlist[1][0]) 
             self.quiz_list.append(qSprite(qlist[1][1]))
-            self.a3 = qlist[2][0] 
+            self.a3 = encode(qlist[2][0]) 
             self.quiz_list.append(qSprite(qlist[2][1]))
-            self.a4 = qlist[3][0] 
+            self.a4 = encode(qlist[3][0])
             self.quiz_list.append(qSprite(qlist[3][1]))
             self.previous = self.question_number
 
         """Check for collision with the answers"""
         collide = check_for_collision_with_list(self.player, self.quiz_list)
         if collide:
-            if collide[1].correct == True:
-                # Victory
-                # Draw text Success and sleep for 2 seconds?
-                x = 0
-            else:
-                x = 0
-                # Failure
-                # Draw text Failure and sleep 2 seconds?
             # Update question/answer list with new textures/sprites from db
             self.question_number += 1
             shuffle(self.array)    
@@ -265,7 +295,6 @@ def main():
     window = gameWindow()
     window.setup()
     arcade.run()
-
 
 # if main file (not a module) run main
 if __name__ == "__main__":
