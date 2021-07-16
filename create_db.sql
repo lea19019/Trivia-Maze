@@ -1599,3 +1599,4 @@ VALUES
 -- verify it worked
 SELECT * FROM questions;
 SELECT * FROM answers;
+SELECT * FROM common_lookup;
