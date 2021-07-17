@@ -12,7 +12,7 @@ Our team consisted of
 
 * Matthew Unsworth
 * Sandro Dinklang
-* Vincente Castillo
+* Vicente Castillo
 * Torin Bolander
 
 # Useful Websites
